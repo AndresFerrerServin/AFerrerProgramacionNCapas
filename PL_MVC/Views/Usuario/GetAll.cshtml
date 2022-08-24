@@ -1,0 +1,78 @@
+﻿@model ML.Usuario
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <h2>Usuario</h2>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <h5>Seleccione un usuario para editarla o el boton + para agregar un usuario...</h5>
+            <hr />
+        </div>
+    </div>
+
+    <div class="row">
+        <div style="float:right;">
+            @Html.ActionLink("+", "Form", "Usuario", htmlAttributes: new { @class = "btn btn-success" })
+
+        </div>
+        @if (Model.Usuarios == null)
+        {
+            <div class="p-3 mb-2 bg-danger text-white">Aun no hay materias registradas</div>
+        }
+        else
+        {
+            <table class="table table-bordered table-responsive">
+                <thead>
+                    <tr>
+                        <td class="text-center">Editar</td>
+
+                        <td class="hidden">IdUsuario</td>
+                        <td class="text-center">UserName</td>
+                        <td class="text-center">Nombre</td>
+
+                        <td class="text-center">Email</td>
+                        <td class="text-center">Password</td>
+                        <td class="text-center">FechaNacimiento</td>
+                        <td class="text-center">Sexo</td>
+                        <td class="text-center">Telefono</td>
+                        <td class="text-center">Celular</td>
+                        <td class="text-center">CURP</td>
+                        <td class="hidden">IdRol</td>
+                        <td class="text-center">Rol</td>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (ML.Usuario usuario in Model.Usuarios)
+                    {
+                        <tr>
+                            <td class="text-center"><a class="btn btn-warning glyphicon glyphicon-edit" href="@Url.Action("Form", "Usuario", new { IdUsuario = usuario.IdUsuario })"></a></td>
+
+                            <td class="hidden">@usuario.IdUsuario</td>
+                            <td class="text-center">@usuario.UserName</td>
+                            <td class="text-center">@usuario.Nombre @usuario.ApellidoPaterno @usuario.ApellidoMaterno</td>
+                            <td class="text-center">@usuario.Email</td>
+                            <td class="text-center">@usuario.Password</td>
+                            <td class="text-center">@usuario.FechaNacimiento.ToString()</td>
+                            <td class="text-center">@usuario.Sexo</td>
+                            <td class="text-center">@usuario.Telefono</td>
+                            <td class="text-center">@usuario.Celular</td>
+                            <td class="text-center">@usuario.CURP</td>
+                            <td class="hidden">@usuario.Rol.IdRol</td>
+                            <td class="text-center">@usuario.Rol.Nombre</td>
+
+                            <td class="text-center"><a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Delete", "Usuario", new { IdUsuario = usuario.IdUsuario})" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
